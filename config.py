@@ -3,9 +3,8 @@
 # Configuration for The Things Network
 
 # credentials
-APP_EUI = '70 B3 D5 7E D0 00 8D 7D'
-#APP_KEY = 'AD E1 13 FF 0E EC BE B7 F5 AB A1 33 DA EF A6 A6' # Proto 2
-APP_KEY = '84 B4 56 AA 9A 16 74 FE F3 9A FA BA EC 4C C2 BC' # Proto 1
+APP_EUI = 'XX XX XX XX XX XX XX XX'
+APP_KEY = 'YY YY YY YY YY YY YY YY YY YY YY YY YY YY YY YY' # Proto 1
 
 # max number of connection attemps to TTN
 MAX_JOIN_ATTEMPT = const(50)
@@ -25,4 +24,5 @@ N_SAMPLES = 5000
 # and have access to the REPL interface
 FORCE_JOIN = False
 
+# Set flag to True if you want to use the deepsleep between the readings (save power)
 USE_DEEPSLEEP = False
