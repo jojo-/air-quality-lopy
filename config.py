@@ -11,7 +11,7 @@ MAX_JOIN_ATTEMPT = const(50)
 
 # number of packets to be transmit with the same data  (retries)
 # default is 3
-N_TX = const(3)
+N_TX = const(0)
 
 # data rate used to send message via LoRaWAN:
 # 1 (slowest - longest range) to 4 (fastest - smallest range)
