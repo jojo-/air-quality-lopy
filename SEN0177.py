@@ -1,6 +1,7 @@
 from machine import Pin, UART, RTC
 import time
 
+
 class SEN0177(object):
 
     def __init__(self,PTX='P10',PRX='P11',PSLEEP=None):
@@ -33,15 +34,21 @@ class SEN0177(object):
         return self._pm10
 
     def _read_PM(self):
-        self._awake()
         #Wait 3 seconds to make sure that the buffer is filled
         time.sleep_ms(3000)
         raw_packet = self._uart1.readall()
-        self._sleep()
         # finding the start/end of the packet and extracting it
         idx_begin = raw_packet.find(b'B')
         idx_end   = idx_begin + 31
         packet = raw_packet[idx_begin:idx_end]
+
+        print(raw_packet)
+        print(len(raw_packet))
+        print(raw_packet[0])
+        print(raw_packet[1])
+        print(packet[3:4])
+
+
 
         # pm concentrations
         self._pm1_0 = int.from_bytes(packet[4:6], 'high')
