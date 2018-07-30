@@ -38,10 +38,9 @@ class PMS5003T(object):
         return self.error
 
     def _read_PM(self):
-        #Wait 3 seconds to make sure that the buffer is filled
-        time.sleep_ms(3000)
-        
-        raw_packet = self._uart1.readall()
+        raw_packet = None
+        while raw_packet is None:
+            raw_packet = self._uart1.readall()
 
         # finding the start/end of the packet and extracting it
         idx_begin = raw_packet.find(b'B')
@@ -63,7 +62,5 @@ class PMS5003T(object):
             self._pm1_0 = ((packet[3]<<8) + packet[4])
             self._pm2_5 = ((packet[5]<<8) + packet[6])
             self._pm10  = ((packet[7]<<8) + packet[8])
-        else:
-            print('Champions du monde!')
         # return the concentrations
         return (self._pm1_0, self._pm2_5, self._pm10)
