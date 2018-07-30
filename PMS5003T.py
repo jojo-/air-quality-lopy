@@ -42,28 +42,19 @@ class PMS5003T(object):
         time.sleep_ms(3000)
         
         raw_packet = self._uart1.readall()
-        print(raw_packet)
+
         # finding the start/end of the packet and extracting it
         idx_begin = raw_packet.find(b'B')
-        print(idx_begin)
+ 
         idx_end   = idx_begin + 32
         packet = raw_packet[idx_begin+1:idx_end]
-        print(len(packet))
-        print(raw_packet)
-        print(packet)
-        #print(format(raw_packet[0],'b'))
-        print(packet[0])
-        print(packet[0] == 0x4d)
-        print(packet[1] == 0x4d)
-
+   
         if(packet[0] == 0x4d):
             receiveflag=0
             receiveSum=0
             for i in range(0,28):
                 receiveSum = receiveSum + packet[i]
             receiveSum = receiveSum + 0x42
-            print(receiveSum)
-            print(((packet[29]<<8)+packet[30]))
             if (receiveSum == ((packet[29]<<8)+packet[30])):
                 self.error = False
             else:
