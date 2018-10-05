@@ -10,16 +10,11 @@ from network import LoRa
 class EasyLoraConnect(object): 
 
     def __init__(self):
-        self.lora = LoRa(mode=LoRa.LORAWAN, region=LoRa.AU915, tx_retries=config.N_TX, device_class=LoRa.CLASS_A)
+        self.lora = LoRa(mode=LoRa.LORAWAN, region=LoRa.AS923, tx_retries=config.N_TX, device_class=LoRa.CLASS_A)
         self._join_lora()
 
     def _join_lora(self,force_join= True):
-        # remove some channels
-        for i in range(16, 65):
-            self.lora.remove_channel(i)
-        for i in range(66, 72):
-            self.lora.remove_channel(i)
-
+    
         # create an OTA authentication params
         app_eui = binascii.unhexlify(config.APP_EUI.replace(' ',''))
         app_key = binascii.unhexlify(config.APP_KEY.replace(' ',''))
@@ -27,7 +22,7 @@ class EasyLoraConnect(object):
         #app_swkey = binascii.unhexlify(config.APP_SWKEY)
         #dev_addr = struct.unpack(">l", binascii.unhexlify(config.DEV_ADDR))[0]
         # Switch the red led on
-        #pycom.rgbled(0xFF0000)
+        pycom.rgbled(0xFF0000)
 
         # join a network using OTAA if not previously done
         self.lora.join(activation=LoRa.OTAA, auth=(app_eui, app_key), timeout=0)
@@ -43,11 +38,11 @@ class EasyLoraConnect(object):
             print("Not joined yet")
         print("LoRa Joined")
         # Switch the red led off
-        #pycom.rgbled(0x000000)
+        pycom.rgbled(0x006400)
 
     def _send_LPP_over_lora(self,split):
         '''Sending data over LoraWan using Cayenne LPP format'''
-
+        pycom.rgbled(0xFF8C00)
         # create a LoRa socket
         s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
 
@@ -68,6 +63,7 @@ class EasyLoraConnect(object):
 
         # sending the payload
         lpp.send()
-
+        
+        pycom.rgbled(0x006400)
         # closing the socket and saving the LoRa state
         s.close()

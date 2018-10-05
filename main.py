@@ -18,14 +18,20 @@ sds011 = SDS011(PTX='P11',PRX='P10')
 
 while True:
         #Read sensor data
-
-        (pm2_5,pm10)= sds011._read_PM()
+        error = False
+        (pm2_5,pm10) = sds011._read_PM()
         if not sds011._isError():
             print('===============================')
+            #print('pm1  =' + str(pm1) + ' ug/m3')
             print('pm2.5 =' + str(pm2_5) + ' ug/m3')
             print('pm10  =' + str(pm10) + ' ug/m3')
-            lora._send_LPP_over_lora([str(pm2_5),str(pm10)])
+            #lora._send_LPP_over_lora([str(pm2_5),str(pm10)])
         else:
             print('Oups...something went wrong in the reading')
+            error = True
+
+        lora._send_LPP_over_lora([str(pm2_5),str(pm10)])
+        
         gc.collect()
-        time.sleep(config.DATA_RATE)
+        pycom.rgbled(0x4B0082)
+        time.sleep(config.INT_SAMPLING)

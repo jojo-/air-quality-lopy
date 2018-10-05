@@ -5,7 +5,6 @@
 from machine import UART
 from network import WLAN
 import pycom
-import os
 
 # deactivate wifi
 if pycom.wifi_on_boot:

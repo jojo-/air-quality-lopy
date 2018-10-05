@@ -3,13 +3,10 @@
 # credentials
 APP_EUI = ''
 APP_KEY = ''
-NWK_KEY = ''
-APP_SWKEY = ''
-DEV_ADDR = ''
 
 # max number of connection attemps to TTN
 MAX_JOIN_ATTEMPT = const(50)
-INT_SAMPLING = 10    # number of sec between each reading
+INT_SAMPLING = 30    # number of sec between each reading
 # number of packets to be transmit with the same data  (retries)
 # default is 3
 N_TX = const(0)

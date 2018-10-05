@@ -48,8 +48,6 @@ class SEN0177(object):
         print(raw_packet[1])
         print(packet[3:4])
 
-
-
         # pm concentrations
         self._pm1_0 = int.from_bytes(packet[4:6], 'high')
         self._pm2_5 = int.from_bytes(packet[6:8], 'high')
