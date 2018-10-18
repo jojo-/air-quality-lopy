@@ -11,6 +11,7 @@ from SDS011 import SDS011
 from EasyLoraConnect import EasyLoraConnect
 import gc
 import time
+import struct
 
 lora = EasyLoraConnect()
 #Init the SEN0177 Sensor
@@ -30,7 +31,13 @@ while True:
             print('Oups...something went wrong in the reading')
             error = True
 
-        lora._send_LPP_over_lora([str(pm2_5),str(pm10)])
+        ttn_data = bytes()
+        ttn_data = ttn_data + struct.pack('!l', pm2_5)
+        ttn_data = ttn_data + struct.pack('!l', pm10)
+        checksum = pm2_5+pm10
+        ttn_data = ttn_data + struct.pack('!l', checksum)
+        print("Sending : "+str(ttn_data))
+        lora.send(ttn_data)
         
         gc.collect()
         pycom.rgbled(0x4B0082)
