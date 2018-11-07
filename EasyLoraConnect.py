@@ -38,7 +38,6 @@ class EasyLoraConnect(object):
                 print("Cannot join so rebooting")
                 machine.reset()
             nb_try = nb_try + 1
-        self.lora.nvram_save()
         print("LoRa Joined")
         # Switch the red led off
         pycom.rgbled(0x006400)
